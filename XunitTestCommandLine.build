@@ -2,7 +2,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="RunCIBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     
-	<!-- PURPOSE: Build Xunit tests, generates TRX files from all test projects on solution and provides an HTML file reporting all test status -->
+	<!-- PURPOSE: Build Xunit tests, generates TRX files from all test projects on solution and provides an HTML file reporting for all test status -->
 	<!--Adapted from: http://theflightlessgeek.co.nz/thoughts/2014/2/18/running-mstest-unit-tests-via-an-msbuild-script -->
 	<!-- THIS FILE MUST BE PLACED AT THE SAME FOLDER OF THE SOLUTION FILE(sln)  -->
 	<!-- Download VSTSTestReport: https://trxtohtml.codeplex.com/ (and copy VSTSReportLib.dll & VSTSTestReport.exe to [any Project Folder Name]\[VSTSTestReport folder name] )--> 
