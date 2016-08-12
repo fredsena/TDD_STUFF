@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="RunCIBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- PURPOSE: Build Xunit tests, generates TRX files from all test projects on solution and provides an HTML file reporting for all test status -->
+  <!--Adapted from: http://theflightlessgeek.co.nz/thoughts/2014/2/18/running-mstest-unit-tests-via-an-msbuild-script -->
+  <!-- THIS FILE MUST BE PLACED AT THE SAME FOLDER OF THE SOLUTION FILE(sln)  -->
+  <!-- Download VSTSTestReport: https://trxtohtml.codeplex.com/ (and copy VSTSReportLib.dll & VSTSTestReport.exe to [any Project Folder Name]\[VSTSTestReport folder name] )-->
+  <PropertyGroup>
+    <Root>$(MSBuildProjectDirectory)\</Root>
+    <DoubleQuotes>"</DoubleQuotes>
+    <Configuration>Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <!--
+			<MsTestExePath>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\mstest.exe</MsTestExePath>
+			<VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+			<VsTestPath>$(ProgramFiles)\Microsoft Visual Studio $(VisualStudioVersion)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\</VsTestPath>
+		-->
+  </PropertyGroup>
+
+  <Target Name="RunCIBuild">
+    <CallTarget Targets="CompileSolution"/>
+    <CallTarget Targets="AfterBuild"/>
+  </Target>
+
+  <Target Name="CompileSolution">
+    <MSBuild Projects="[Solution Name].sln" Properties="Configuration=$(Configuration)" Targets="Build"></MSBuild>
+  </Target>
+
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <TestAssemblies Include="$(MSBuildProjectDirectory)\**\bin\$(Configuration)\[dll's names (tip: use wildcard: *_test*.dll)]"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <!-- ### MUST Install xunit.runner.visualstudio.2.1.0-->
+      <VsTestCommand>vstest.console @(TestAssemblies->' "%(FullPath)"', ' ') /TestAdapterPath:"$(Root)packages\xunit.runner.visualstudio.2.1.0\build\_common" /logger:trx </VsTestCommand>
+    </PropertyGroup>
+
+    <Message Text="**********CommandLine: $(MSBuildProjectDirectory)\[any Project Folder Name]\[VSTSTestReport folder name]\$(VSTSTestReportCommand)"></Message>
+
+    <RemoveDir Directories="TestResults" Condition="Exists('TestResults')" />
+
+    <MakeDir Directories="TestResults" />
+
+    <Message Text="**###*WATCH*####****CommandLine: $(VsTestCommand)"></Message>
+
+    <Exec Command="$(VsTestCommand)" ContinueOnError="true" />
+
+    <ItemGroup>
+      <ReportTRXFiles Include="$(MSBuildProjectDirectory)\TestResults\*.trx"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+      <VSTSTestReportCommand>VSTSTestReport @(ReportTRXFiles->' "%(FullPath)"', ' ') "$(Root)ReportResults\@(ReportTRXFiles->'%(Filename).html', ' ')" </VSTSTestReportCommand>
+    </PropertyGroup>
+
+    <MakeDir Directories="ReportResults" />
+    <Exec Command="$(MSBuildProjectDirectory)\[Project Folder Name]\[VSTSTestReport folder name]\$(VSTSTestReportCommand)" ContinueOnError="true" />
+  </Target>
+</Project>
