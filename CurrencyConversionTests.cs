@@ -2,6 +2,9 @@ using System;
 using System.Globalization;
 using Xunit;
 
+//https://msdn.microsoft.com/en-us/library/ew0seb73(v=vs.110).aspx
+//https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx
+
 namespace CurrencyConversionTests
 {
     public class UnitTest
