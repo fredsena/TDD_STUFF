@@ -28,10 +28,8 @@ namespace UnitTests
         [InlineData("45 - REVISIONAL DE CONTRATO")]
         [InlineData("44 - EXIBICAO DE DOCUMENTOS")]
         [InlineData("23 - REPARACAO DE DANOS")]
-        [InlineData("6 - ORDINARIA")]
         [InlineData("67 - CAUTELAR PROUCAO ANTEC. PROVAS")]
         [InlineData("9 - PRODUCAO ANTECIPADA PROVAS")]
-        [InlineData("44 - EXIBICAO DE DOCUMENTOS")]
         [InlineData("21 - DECLARATORIA QUITACAO DEBITO")]
         public void AlignCrazyLayout(string text)
         {
