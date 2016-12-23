@@ -227,6 +227,11 @@ namespace Integration_Test_ClientService.Helpers
         {
             return RandomNumberBetween(minValue, maxValue).ToString("0.00", cultureInfo);            
         }
+        
+        public string RandomDecimal(double minValue, double maxValue)
+        {
+            return Convert.ToDecimal(RandomNumberBetween(minValue, maxValue).ToString("0.00", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+        }        
     }
 }
 
