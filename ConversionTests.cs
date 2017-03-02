@@ -1,11 +1,13 @@
 using System;
 using System.Globalization;
 using Xunit;
+using FluentAssertions;
+using Xbehave;
 
 //https://msdn.microsoft.com/en-us/library/ew0seb73(v=vs.110).aspx
 //https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx
 
-namespace CurrencyConversionTests
+namespace ConversionTests
 {
     public class UnitTest
     {
@@ -67,5 +69,33 @@ namespace CurrencyConversionTests
             Decimal.TryParse(value, style, culture, out number);
             return number;
         }
+        
+        [Theory]
+        [InlineData("2016-10-25")]
+        [InlineData("05/01/2009 14:57:32.8")]
+        [InlineData("2009-05-01 14:57:32.8")]
+        [InlineData("2009-05-01T14:57:32.8375298-04:00")]
+        [InlineData("5/01/2008")]
+        [InlineData("5/01/2008 14:57:32.80 -07:00")]
+        [InlineData("1 May 2008 2:57:32.8 PM")]
+        [InlineData("16-05-2009 1:00:32 PM")]
+        [InlineData("Fri, 15 May 2009 20:10:57 GMT")]
+        public void Should_TryParse_Date(string stringDate)
+        {
+            ParseDate(stringDate).Should().NotBeEmpty();
+        }
+
+        public string ParseDate(string input)
+        {
+            string result = "";
+            DateTime dateResult;
+
+            if (DateTime.TryParse(input, out dateResult))
+            {
+                result = dateResult.ToString("dd/MM/yyyy");
+            }
+
+            return result;
+        }        
     }
 }
