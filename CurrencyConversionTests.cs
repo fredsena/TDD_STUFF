@@ -30,9 +30,15 @@ namespace CurrencyConversionTests
         [InlineData("1194.2286")]
         [InlineData("14131.8198")]
         [InlineData("2616.2105")]
+        [InlineData("500")]
+        [InlineData("")]
+        [InlineData("0")]
         public void ChangeToBRLCurrency(string value)
         {
             decimal number;
+            
+            if (string.IsNullOrEmpty(value.Trim())) value = "0";
+            
             value = value.Replace(".", ",");            
             NumberStyles style = NumberStyles.AllowDecimalPoint;
             
