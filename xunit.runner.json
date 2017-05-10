@@ -1,0 +1,6 @@
+{
+    "__comment1_": "https://xunit.github.io/docs/configuring-with-json.html",
+    "__comment2_": "https://github.com/xunit/xunit/pull/828",
+    "methodDisplay": "method",
+    "methodDisplayOptions": "all"
+}
