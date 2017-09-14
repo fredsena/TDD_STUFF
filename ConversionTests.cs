@@ -17,6 +17,30 @@ namespace ConversionTests
 {
     public class UnitTest
     {
+        [Fact]
+        public void Should_Remove_Quotes_From_Property()
+        {
+            var input = "{currency_code:'BRL',country_code:'BR',accounts:[{account_id:'1234',active:true,options:['XAMEX','DEC','JECB','MO','MCE','VESA'],inst:[],is_active:true,ex:[]},{account_id:'4321',active:true,options:['EX','LTA','DEMC','MEC','EUKE','VESA'],inst:[],is_active:false,ex:[]}]}";
+            var regex = new Regex(@"account_id:'(.)*?'");
+            var matches = regex.Matches(input);
+
+            var resultado = input;
+
+            foreach (Match match in matches)
+            {
+                foreach (Capture capture in match.Captures)
+                {
+                    var matchFound = capture.Value;
+                    var idealPattern = matchFound.Replace("'", string.Empty);
+                    resultado = resultado.Replace(matchFound, idealPattern);
+                }
+            }
+
+            input.Should().Contain("account_id:'");
+            resultado.Should().NotContain("account_id:'");
+        }       
+        
+        
         [Theory]
         [InlineData("60.185,90", "60.185,90")]
         [InlineData("1548.36", "1.548,36")]
