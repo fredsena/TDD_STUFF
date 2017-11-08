@@ -28,6 +28,15 @@ namespace ExportJson.Tests
     //RegisteredUsers.Add(new Person() { PersonID = 3, Name = "Adrian Martinson", Registered = false });
     //RegisteredUsers.Add(new Person() { PersonID = 4, Name = "Nora Osborn", Registered = false });    
 
+    public class ExampleAutoDataAttribute : AutoDataAttribute
+    {
+        public ExampleAutoDataAttribute() : base(new Fixture().Customize(new AutoNSubstituteCustomization()))
+        {
+            Fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList().ForEach(b => Fixture.Behaviors.Remove(b));
+            Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        }
+    }
+
     public class UnitTest
     {
         string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.FullName, "ZIP");
