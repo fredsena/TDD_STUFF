@@ -11,9 +11,17 @@ using Ionic.Zlib;
 using Ionic.Zip;
 using System.IO;
 
+/*
+References for further projects :-)
+
+using NSubstitute;
+using Ploeh.AutoFixture;
+using Ploeh.AutoFixture.AutoNSubstitute;
+using Ploeh.AutoFixture.Xunit2;
+*/
+
 namespace ExportJson.Tests
 {
-
     //var RegisteredUsers = new List<Person>();
     //RegisteredUsers.Add(new Person() { PersonID = 1, Name = "Bryon Hetrick", Registered = true });
     //RegisteredUsers.Add(new Person() { PersonID = 2, Name = "Nicole Wilcox", Registered = true });
