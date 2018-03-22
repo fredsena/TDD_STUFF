@@ -8,9 +8,20 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using ClientService.intranet.;
 
+using System.Linq;
+using AutoFixture;
 
 namespace ClientService
 {
+    public static class FixtureExtensions
+    {
+        public static void PreventRecursiveBehavior(this Fixture fixture)
+        {
+            fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList().ForEach(b => fixture.Behaviors.Remove(b));
+            fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+        }
+    }   
+    
     public class ApiConfig
     {
         public static XYZ2_Service Api
