@@ -10,7 +10,7 @@ test
   - [Planning](#planning)
     
  # Description
-The information here is still being incorporated from [this Google Document (sample)](https://docs.google.com/a/etsmtl.net/document/d/1kHylinKFGfJcrfo8eo-BnmsEkC-JRSLPb2CYKz3oRLY/edit?usp=sharing).
+The information here is still being incorporated from [this Google Document (sample)](https://www.google.com).
  - Amet in fermentum posuere, corporis velit praesent at interdum, tristique consectetuer nullam nulla neque erat, nulla id iaculis libero dolor duis, quam id justo lorem.
  
 
