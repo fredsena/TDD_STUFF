@@ -27,7 +27,8 @@ namespace ExportJson.Tests
     //RegisteredUsers.Add(new Person() { PersonID = 2, Name = "Nicole Wilcox", Registered = true });
     //RegisteredUsers.Add(new Person() { PersonID = 3, Name = "Adrian Martinson", Registered = false });
     //RegisteredUsers.Add(new Person() { PersonID = 4, Name = "Nora Osborn", Registered = false });    
-
+    
+    //https://github.com/AutoFixture/AutoFixture/wiki/Examples-of-using-behaviors
     public class ExampleAutoDataAttribute : AutoDataAttribute
     {
         public ExampleAutoDataAttribute() : base(new Fixture().Customize(new AutoNSubstituteCustomization()))
