@@ -16,7 +16,55 @@ using Xbehave;
 namespace ConversionTests
 {
     public class UnitTest
-    {
+    {        
+        [Fact]
+        public void GetConcatenatedUrl()
+        {
+            var relativeUri = "/oauth2/token";
+            var baseUrlSlash = "https://test.com/api/v2/";
+            var baseUrlNoOSlash = "https://test.com/api";
+            
+            var result = ConcatenateUrl(baseUrlSlash, relativeUri);
+            result.Should().Be("https://test.com/api/v2/oauth2/token");
+
+            var result2 = ConcatenateUrl(baseUrlNoOSlash, "oauth2/token");
+            result2.Should().Be("https://test.com/api/oauth2/token");
+
+            var result3 = ConcatenateUrl(baseUrlSlash, "oauth2/token");
+            result3.Should().Be("https://test.com/api/v2/oauth2/token");
+
+            var result4 = ConcatenateUrl(baseUrlNoOSlash, "/oauth2/token");
+            result4.Should().Be("https://test.com/api/oauth2/token");
+        }
+
+        public static string ConcatenateUrl(string baseUrl, string relativeUri)
+        {
+            if (string.IsNullOrWhiteSpace(baseUrl) || string.IsNullOrWhiteSpace(relativeUri))
+            {
+                return null;
+            }
+
+            var baseUrlResult = baseUrl;
+            relativeUri = relativeUri.Replace("//", "/");
+            var relativeUriResult = relativeUri;
+
+            int firstSlash = relativeUri.IndexOf('/');
+
+            if (firstSlash == 0)
+            {
+                relativeUriResult = relativeUri.Substring(firstSlash + 1);
+            }           
+
+            int lastSlash = baseUrl.LastIndexOf('/');
+
+            if (lastSlash == baseUrl.Length - 1)
+            {
+                baseUrlResult = baseUrl.Substring(0, lastSlash);
+            }           
+
+            return string.Concat(baseUrlResult, "/", relativeUriResult);
+        }        
+        
         [Fact]
         public void Should_Remove_Quotes_From_Property()
         {
